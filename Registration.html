@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registration</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $("#Register").submit(function(event){
+        // Prevent default posting of form - put here to work in case of errors
+        event.preventDefault();
+        
+        var accID = $('#accID').val();
+        var staffID = $('#staffID').val();
+        var password = $('#pass').val();
+        var confPass = $('#cPass').val();
+        
+        if(password != confPass) {
+            alert("Password not match");
+        }
+        else {
+            $.ajax({
+              url: 'LoginProcess.php',
+              type: 'post',
+              data: {'accID': accID, 'staffID': staffID, 'password': password, 'action': 'register'},
+              success: function(data, status) {
+                if(data == "ok") {
+                    alert("Record inserted.");
+                    location.reload();
+                } else {
+                    alert("Insert fail.");
+                }
+              },
+              error: function(xhr, desc, err) {
+                aler(err);
+              }
+            }) // end ajax call
+        }
+    });
+});
+</script>
+<style>
+td {
+    padding: 5px;
+}
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+.panel-heading {
+    border-bottom: 7px solid #eee;
+    color: #fff;
+    background: #4fd0fb;
+}
+.panel-body {
+    padding: 30px;
+    background: #fcfcfc;
+}
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="page-header panel-heading">
+                    <h1>Registration</h1>
+                </div>
+                <div class="panel-body">
+                    <form id="Register" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Login account:</label>
+                            <div class="form-group input-group col-sm-8">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input id="accID" class="form-control" type="text" name="accID" maxlength="10" placeholder="Account Name" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Staff ID:</label>
+                            <div class="form-group input-group col-sm-8">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                                <input id="staffID" class="form-control" type="text" name="staffID" maxlength="10" placeholder="Staff ID" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Password:</label>
+                            <div class="form-group input-group col-sm-8">                        
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                                <input id="pass" class="form-control" type="password" name="password" maxlength="30" placeholder="Password" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Confirm password:</label>
+                            <div class="form-group input-group col-sm-8">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-repeat"></i>
+                                </span>
+                                <input id="cPass" class="form-control" type="password" name="confPass" maxlength="30" placeholder="Input Password Again" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-info" value="Register">
+                                    <i class="fa fa-user-plus"></i> Register</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="reset" class="btn btn-warning" value="Reset" />
+                                    <i class="fa fa-undo"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                        <hr/>
+                        Already have an account? <a href="Login.html">Sign in</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

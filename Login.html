@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+    $("#Login").submit(function(event){
+        // Prevent default posting of form - put here to work in case of errors
+        event.preventDefault();
+        
+        var accID = $('#accID').val();
+        var password = $('#pass').val();
+        
+        $.ajax({
+          url: 'LoginProcess.php',
+          type: 'post',
+          data: {'accID': accID, 'password': password, 'action': 'login'},
+          success: function(data, status) {
+            if(data == "ok") {
+				alert("Login successful.");
+                location.href = "home.php";
+            } else {
+                alert("Login fail.");
+            }
+          },
+          error: function(xhr, desc, err) {
+            aler(err);
+          }
+        }) // end ajax call
+    });
+});
+</script>
+<style>
+.account-wall {
+    margin-top: 20px;
+    padding: 40px 60px 20px 50px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+td {
+    padding: 5px;
+}
+.new-account {
+    display: block;
+    margin-top: 10px;
+}
+.text-center {
+    text-align: center;
+}
+a {
+    color: #428bca;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="page-header">
+                    <h1>Login</h1>
+                </div>
+                <div class="account-wall">
+                    <form id="Login" class="form-horizontal">
+                        <div class="form-group">
+                            <label>Login account: </label>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                                <input id="accID" class="form-control input-lg" type="text" name="accID" placeholder="Account Name" maxlength="10" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password: </label>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                                <input id="pass" class="form-control input-lg" type="password" name="password" placeholder="Password" maxlength="30" required="required" />
+                            </div>                        
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                            </div>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block" value="Login">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="Registration.html" class="text-center new-account">Create an account </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
